@@ -22,22 +22,23 @@ export class BonoService {
         }
 
         const usuario: UsuarioEntity = bono.usuario;
+        if(!usuario){
+            throw new BusinessLogicException("El bono no puede ser creado porque no tiene un usuario asociado", BusinessError.NOT_FOUND);
+        }
         if(usuario.rol != "Profesor"){
             throw new BusinessLogicException("El bono no puede ser creado porque el usuario no tiene rol de Profesor", BusinessError.PRECONDITION_FAILED);
         }
         return await this.bonoRepository.save(bono);
     }
 
-    // async findBonoByCodigo(classCode: string): Promise<BonoEntity[]>{
-        
-
-    //     const bono: BonoEntity = await this.bonoRepository.findOne({where: {id}})
-    //     if(!bono){
-    //         throw new BusinessLogicException("El profesor con el id dado no fue encontrado", BusinessError.NOT_FOUND);
-    //     }
+    async findBonoByCodigo(id: Long): Promise<BonoEntity[]>{
+        const bono: BonoEntity[] = await this.bonoRepository.find({where: {id}});
+        if(!bono){
+            throw new BusinessLogicException("El bbno con el id dado no fue encontrado", BusinessError.NOT_FOUND);
+        }
     
-    //     return profesor
-    // }
+        return bono
+    }
 
     async findAllBonosByUsuario(id: Long): Promise<BonoEntity[]>{
         const usuario: UsuarioEntity = await this.usuarioRepository.findOne({where: {id}, relations: ["bonos"]});

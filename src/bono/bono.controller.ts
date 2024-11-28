@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, HttpCode, Param, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, UseInterceptors } from '@nestjs/common';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors/business-errors.interceptor';
 import { BonoService } from './bono.service';
 import { BonoDto } from './bono.dto/bono.dto';
@@ -12,7 +12,7 @@ import { Long } from 'typeorm';
 export class BonoController {
     constructor(private readonly bonoService: BonoService) {}
 
-    @Get()
+    @Post()
     async create(@Body() bonoDto: BonoDto) {
         const bono: BonoEntity = plainToInstance(BonoEntity, bonoDto);
         return await this.bonoService.crearBono(bono);
