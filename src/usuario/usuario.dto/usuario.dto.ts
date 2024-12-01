@@ -1,11 +1,10 @@
 /* eslint-disable prettier/prettier */
 
-import { IsNotEmpty, IsNumber, IsString } from "class-validator"
+import { IsNotEmpty, IsPositive, IsString } from "class-validator"
 
 export class UsuarioDto {
 
-    @IsNumber()
-    @IsNotEmpty()
+    @IsPositive()
     readonly num_cedula: number
 
     @IsString()
@@ -16,13 +15,10 @@ export class UsuarioDto {
     @IsNotEmpty()
     readonly grupo_investigacion: string
 
-    @IsNumber()
-    @IsNotEmpty()
+    @IsPositive()
     readonly num_extension: number
 
     @IsString()
     @IsNotEmpty()
     readonly rol: string
-
-
 }

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { IsString, IsNotEmpty, IsNumber } from "class-validator"
+import { IsString, IsNotEmpty, IsPositive } from "class-validator"
 
 export class ClaseDto {
 
@@ -12,7 +12,6 @@ export class ClaseDto {
     @IsNotEmpty()
     readonly codigo: string
 
-    @IsNumber()
-    @IsNotEmpty()
+    @IsPositive()
     readonly num_creditos: number
 }

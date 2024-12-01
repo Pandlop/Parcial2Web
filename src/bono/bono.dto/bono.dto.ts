@@ -1,15 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { Double } from "typeorm";
+import { IsNotEmpty, IsPositive, IsString } from "class-validator";
 
 export class BonoDto {
-    @IsNumber()
-    @IsNotEmpty()
+    @IsPositive()
     readonly monto: number;
 
-    @IsNumber()
-    @IsNotEmpty()
-    readonly calificacion: Double;
+    @IsPositive()
+    readonly calificacion: number;
 
     @IsString()
     @IsNotEmpty()

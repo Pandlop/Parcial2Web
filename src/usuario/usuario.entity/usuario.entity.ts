@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 
-import { BonoEntity } from "src/bono/bono.entity/bono.entity";
-import { ClaseEntity } from "src/clase/clase.entity/clase.entity";
-import { Column, Entity, Long, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BonoEntity } from "../../bono/bono.entity/bono.entity";
+import { ClaseEntity } from "../../clase/clase.entity/clase.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class UsuarioEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: Long;
+    @PrimaryGeneratedColumn({ type: "bigint" })
+    id: number
 
     @Column()
     num_cedula: number
@@ -24,8 +24,8 @@ export class UsuarioEntity {
     @Column()
     rol: string
 
-    @Column()
-    jefe: UsuarioEntity
+    @Column({ nullable: true })
+    jefe: number
 
     @OneToMany(() => BonoEntity, bono => bono.usuario)
     bonos: BonoEntity[];

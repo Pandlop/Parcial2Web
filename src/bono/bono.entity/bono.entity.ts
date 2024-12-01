@@ -1,19 +1,19 @@
 /* eslint-disable prettier/prettier */
 
-import { ClaseEntity } from "src/clase/clase.entity/clase.entity";
-import { UsuarioEntity } from "src/usuario/usuario.entity/usuario.entity";
-import { Column, Double, Entity, Long, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { ClaseEntity } from "../../clase/clase.entity/clase.entity";
+import { UsuarioEntity } from "../../usuario/usuario.entity/usuario.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class BonoEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: Long
+    @PrimaryGeneratedColumn({ type: "bigint" })
+    id: number
 
     @Column()
     monto: number
 
-    @Column()
-    calificacion: Double
+    @Column("double precision")
+    calificacion: number
 
     @Column()
     palabra_clave: string

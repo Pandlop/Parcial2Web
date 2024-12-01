@@ -1,16 +1,15 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, UseInterceptors } from '@nestjs/common';
-import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors/business-errors.interceptor';
+import { Body, Controller, Delete, HttpCode, Param, Post, UseInterceptors } from '@nestjs/common';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors/business-errors.interceptor';
 import { BonoService } from './bono.service';
 import { BonoDto } from './bono.dto/bono.dto';
 import { plainToInstance } from 'class-transformer';
 import { BonoEntity } from './bono.entity/bono.entity';
-import { Long } from 'typeorm';
 
 @Controller('bonos')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class BonoController {
-    constructor(private readonly bonoService: BonoService) {}
+    constructor(private readonly bonoService: BonoService) { }
 
     @Post()
     async create(@Body() bonoDto: BonoDto) {
@@ -20,18 +19,18 @@ export class BonoController {
 
     // @Get()
     // async findBonoByCodigo(@Param('codigo') codigo: string) {
-    //     return await this.bonoService.find(codigo);
+    //     return await this.bonoService.findBonoByCodigo(codigo);
     // }
 
-    @Get(':usuarioId')
-    async findAllBonosByUsuario(@Param('usuarioId') usuarioId: Long) {
-        return await this.bonoService.findAllBonosByUsuario(usuarioId);
-    }
+    // @Get(':usuarioId')
+    // async findAllBonosByUsuario(@Param('usuarioId') usuarioId: Long) {
+    //     return await this.bonoService.findAllBonosByUsuario(usuarioId);
+    // }
 
     @Delete(':bonoId')
     @HttpCode(204)
-    async delete(@Param('bonoId') bonoId: Long) {
+    async delete(@Param('bonoId') bonoId: number) {
         return await this.bonoService.deleteBonoId(bonoId);
     }
-     
+
 }

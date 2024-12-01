@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 
-import { BonoEntity } from "src/bono/bono.entity/bono.entity";
-import { UsuarioEntity } from "src/usuario/usuario.entity/usuario.entity";
-import { Column, Entity, Long, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BonoEntity } from "../../bono/bono.entity/bono.entity";
+import { UsuarioEntity } from "../../usuario/usuario.entity/usuario.entity";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class ClaseEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: Long
+    @PrimaryGeneratedColumn({ type: "bigint" })
+    id: number
 
     @Column()
     nombre: string
