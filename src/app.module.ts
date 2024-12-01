@@ -12,7 +12,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BonoEntity } from './bono/bono.entity/bono.entity';
 import { ClaseEntity } from './clase/clase.entity/clase.entity';
 import { UsuarioEntity } from './usuario/usuario.entity/usuario.entity';
-import { ClaseBonoModule } from './clase-bono/clase-bono.module';
 
 @Module({
   imports: [UsuarioModule, BonoModule, ClaseModule, UsuarioBonoModule, ClaseBonoModule,

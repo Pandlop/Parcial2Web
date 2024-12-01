@@ -154,6 +154,6 @@ describe('UsuarioService', () => {
       usuario: storedUsuario,
     });
 
-    await expect(() => service.eliminarUsuario(storedUsuario.id)).rejects.toHaveProperty('message', 'El usuario con el id dado no puede ser eliminado porque tiene un bono asociados');
+    await expect(() => service.eliminarUsuario(storedUsuario.id)).rejects.toHaveProperty('message', 'El usuario con el id dado no puede ser eliminado porque tiene bonos asociados');
   });
 });

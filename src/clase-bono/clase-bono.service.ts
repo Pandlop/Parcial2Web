@@ -17,16 +17,16 @@ export class ClaseBonoService {
     ) { }
 
 
-    async findBonoByCodigo(codigo: string): Promise<BonoEntity> {
+    async findBonoByCodigo(codigo: string): Promise<BonoEntity[]> {
         const clase: ClaseEntity = await this.claseRepository.findOne({ where: { codigo } });
         if (!clase) {
             throw new BusinessLogicException("La clase con el código dado no fue encontrada", BusinessError.NOT_FOUND);
         }
-        const bono: BonoEntity = await this.bonoRepository.findOne({ where: { clase }, relations: ['clase'] });
-        if (!bono) {
+        const bonos: BonoEntity[] = await this.bonoRepository.find({ where: { clase }, relations: ['clase'] });
+        if (!bonos || bonos.length === 0) {
             throw new BusinessLogicException("No hay ningun bono asociado a la clase", BusinessError.NOT_FOUND);
         }
 
-        return bono;
+        return bonos;
     }
 }

@@ -18,7 +18,7 @@ export class BonoService {
 
     async crearBono(bono: BonoEntity): Promise<BonoEntity> {
         if (bono.monto <= 0) {
-            throw new BusinessLogicException("El bono no puede ser creado porque no tiene un monto", BusinessError.NOT_FOUND);
+            throw new BusinessLogicException("El bono no puede ser creado porque no tiene un monto valido", BusinessError.PRECONDITION_FAILED);
         }
 
         const usuario: UsuarioEntity = bono.usuario;

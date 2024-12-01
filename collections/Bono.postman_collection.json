@@ -1,0 +1,474 @@
+{
+	"info": {
+		"_postman_id": "8acd2eaf-a9af-4a08-a60f-d81334d8ff28",
+		"name": "Bono",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29277635",
+		"_collection_link": "https://red-station-744766.postman.co/workspace/Parcial2Web~8138687e-5c55-4eb8-be9f-db404ad840a2/collection/29277635-8acd2eaf-a9af-4a08-a60f-d81334d8ff28?action=share&source=collection_link&creator=29277635"
+	},
+	"item": [
+		{
+			"name": "Create usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"usuario_id_1\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"num_cedula\": \"1444567495\",\r\n    \"nombre\": \"John Smith\",\r\n    \"grupo_investigacion\":\"TICSW\",\r\n    \"num_extension\": \"01234567\",\r\n    \"rol\": \"Profesor\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/usuarios",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios"
+					]
+				},
+				"description": "Se decidio hacer porque es la base para realizar operaciones con bonos"
+			},
+			"response": []
+		},
+		{
+			"name": "Create usuario decana",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"usuario_id_2\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"num_cedula\": \"1444567495\",\r\n    \"nombre\": \"John Smith\",\r\n    \"grupo_investigacion\":\"TICSW\",\r\n    \"num_extension\": \"01234567\",\r\n    \"rol\": \"Decana\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/usuarios",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios"
+					]
+				},
+				"description": "Este caso se decidio probar para revisar que se peude crear un usuario con otro rol. Ademas sirve para porbar casos como borrado de bonos"
+			},
+			"response": []
+		},
+		{
+			"name": "Create bono",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"bono_id_1\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monto\": 10,\r\n    \"calificacion\": 4,\r\n    \"palabra_clave\": \"clave\",\r\n    \"usuario\": {\r\n                    \"id\": {{usuario_id_1}},\r\n                    \"num_cedula\": \"1444567495\",\r\n                    \"nombre\": \"John Smith\",\r\n                    \"grupo_investigacion\":\"TICSW\",\r\n                    \"num_extension\": \"01234567\",\r\n                    \"rol\": \"Profesor\"\r\n                }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos"
+					]
+				},
+				"description": "Se hace porque confirma que se pueda crear un bono"
+			},
+			"response": []
+		},
+		{
+			"name": "Create bono 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"bono_id_2\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monto\": 10,\r\n    \"calificacion\": 5,\r\n    \"palabra_clave\": \"clave\",\r\n    \"usuario\": {\r\n                    \"id\": {{usuario_id_1}},\r\n                    \"num_cedula\": \"1444567495\",\r\n                    \"nombre\": \"John Smith\",\r\n                    \"grupo_investigacion\":\"TICSW\",\r\n                    \"num_extension\": \"01234567\",\r\n                    \"rol\": \"Profesor\"\r\n                }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos"
+					]
+				},
+				"description": "Se hace ya que se desea verificar que no se puedan borrar bonos con calificacion mayor a 4"
+			},
+			"response": []
+		},
+		{
+			"name": "Create bono con monto invalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El bono no puede ser creado porque no tiene un monto valido\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monto\": -1,\r\n    \"calificacion\": 4,\r\n    \"palabra_clave\": \"clave\",\r\n    \"usuario\": {\r\n                    \"id\": {{usuario_id_1}},\r\n                    \"num_cedula\": \"1444567495\",\r\n                    \"nombre\": \"John Smith\",\r\n                    \"grupo_investigacion\":\"TICSW\",\r\n                    \"num_extension\": \"01234567\",\r\n                    \"rol\": \"Profesor\"\r\n                }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos"
+					]
+				},
+				"description": "Se hace para revisar que no se pueda crear un bono con un monto <= 0"
+			},
+			"response": []
+		},
+		{
+			"name": "Create bono sin usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El bono no puede ser creado porque no tiene un usuario asociado\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monto\": 10,\r\n    \"calificacion\": 4,\r\n    \"palabra_clave\": \"clave\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos"
+					]
+				},
+				"description": "Se hace para revisar que no se pueda crear un bono que no tenga usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "Create bono con decana",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El bono no puede ser creado porque el usuario no tiene rol de Profesor\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monto\": 10,\r\n    \"calificacion\": 4,\r\n    \"palabra_clave\": \"clave\",\r\n    \"usuario\": {\r\n                    \"num_cedula\": \"1444567495\",\r\n                    \"nombre\": \"John Smith\",\r\n                    \"grupo_investigacion\":\"TICSW\",\r\n                    \"num_extension\": \"01234567\",\r\n                    \"rol\": \"Decana\"\r\n                }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos"
+					]
+				},
+				"description": "Se hace porque para revisar que no se pueda crear un bono cuyo rol no sea profesor"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete bono",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/bonos/{{bono_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos",
+						"{{bono_id_1}}"
+					]
+				},
+				"description": "Se hace para ver que se elimine correctamente un bono"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete unexisting bono",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El bono con el id dado no fue encontrado\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/bonos/0",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos",
+						"0"
+					]
+				},
+				"description": "Se hace para ver que no se puedan borrar bonos inexistentes"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete bono con calificacion mayor a 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El bono con el id dado no puede ser eliminado porque tiene una calificación mayor a 4\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/bonos/{{bono_id_2}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos",
+						"{{bono_id_2}}"
+					]
+				},
+				"description": "Se hace para ver que no se puedan borrar bonos con calificacion mayor a 4"
+			},
+			"response": []
+		}
+	]
+}

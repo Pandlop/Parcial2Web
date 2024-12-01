@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { ClaseBonoService } from './clase-bono.service';
+import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors/business-errors.interceptor';
 
 @Controller('bonos')
+@UseInterceptors(BusinessErrorsInterceptor)
 export class ClaseBonoController {
     constructor(private readonly claseBonoService: ClaseBonoService) { }
 

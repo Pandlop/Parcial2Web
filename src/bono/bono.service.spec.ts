@@ -87,7 +87,7 @@ describe('BonoService', () => {
       clase: null
     }
 
-    await expect(() => service.crearBono(bono)).rejects.toHaveProperty('message', 'El bono no puede ser creado porque no tiene un monto');
+    await expect(() => service.crearBono(bono)).rejects.toHaveProperty('message', 'El bono no puede ser creado porque no tiene un monto valido');
   });
 
   it('crearBono should return an error when bono has no usuario', async () => {

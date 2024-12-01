@@ -60,10 +60,10 @@ describe('ClaseBonoService', () => {
     bono.clase = clase;
     await bonoRepository.save(bono);
     const bonoRes = await service.findBonoByCodigo(clase.codigo);
-    expect(bonoRes.id).toBe(bono.id);
-    expect(bonoRes.monto).toBe(bono.monto);
-    expect(bonoRes.calificacion).toBe(bono.calificacion);
-    expect(bonoRes.palabra_clave).toBe(bono.palabra_clave);
+    expect(bonoRes[0].id).toBe(bono.id);
+    expect(bonoRes[0].monto).toBe(bono.monto);
+    expect(bonoRes[0].calificacion).toBe(bono.calificacion);
+    expect(bonoRes[0].palabra_clave).toBe(bono.palabra_clave);
 
   });
 

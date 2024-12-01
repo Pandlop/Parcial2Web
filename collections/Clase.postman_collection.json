@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "502c7ad9-bc99-421e-b62b-f3d2407334ff",
+		"name": "Clase",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29277635",
+		"_collection_link": "https://red-station-744766.postman.co/workspace/Parcial2Web~8138687e-5c55-4eb8-be9f-db404ad840a2/collection/29277635-502c7ad9-bc99-421e-b62b-f3d2407334ff?action=share&source=collection_link&creator=29277635"
+	},
+	"item": [
+		{
+			"name": "Create clase",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"clase_id_1\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"IP\",\r\n    \"codigo\": \"0123456789\",\r\n    \"num_creditos\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clases",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clases"
+					]
+				},
+				"description": "Se hace para ver que se pueda crear un clase base"
+			},
+			"response": []
+		},
+		{
+			"name": "Create clase con codigo invalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La clase no puede ser creada porque el codigo no tiene 10 caracteres\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"IP\",\r\n    \"codigo\": \"0\",\r\n    \"num_creditos\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clases",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clases"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get clase by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/clases/{{clase_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clases",
+						"{{clase_id_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get unexisting clase",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La clase con el id dado no fue encontrada\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/clases/0",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clases",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

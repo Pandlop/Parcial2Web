@@ -47,7 +47,7 @@ export class UsuarioService {
 
         const bonos: BonoEntity[] = usuario.bonos;
         if (bonos.length > 0) {
-            throw new BusinessLogicException("El usuario con el id dado no puede ser eliminado porque tiene un bono asociados", BusinessError.PRECONDITION_FAILED)
+            throw new BusinessLogicException("El usuario con el id dado no puede ser eliminado porque tiene bonos asociados", BusinessError.PRECONDITION_FAILED)
         }
 
         await this.usuarioRepository.remove(usuario);

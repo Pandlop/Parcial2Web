@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "d51c479f-3b98-46ff-8b43-68d7de144155",
+		"name": "UsuarioBono",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29277635",
+		"_collection_link": "https://red-station-744766.postman.co/workspace/Parcial2Web~8138687e-5c55-4eb8-be9f-db404ad840a2/collection/29277635-d51c479f-3b98-46ff-8b43-68d7de144155?action=share&source=collection_link&creator=29277635"
+	},
+	"item": [
+		{
+			"name": "Create usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"usuario_id_1\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"num_cedula\": \"1444567495\",\r\n    \"nombre\": \"John Smith\",\r\n    \"grupo_investigacion\":\"TICSW\",\r\n    \"num_extension\": \"01234567\",\r\n    \"rol\": \"Profesor\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/usuarios",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios"
+					]
+				},
+				"description": "Se decidio hacer porque es la base para realizar operaciones con bonos"
+			},
+			"response": []
+		},
+		{
+			"name": "Create bono",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"bono_id_1\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monto\": 10,\r\n    \"calificacion\": 4,\r\n    \"palabra_clave\": \"clave\",\r\n    \"usuario\": {\r\n                    \"id\": {{usuario_id_1}},\r\n                    \"num_cedula\": \"1444567495\",\r\n                    \"nombre\": \"John Smith\",\r\n                    \"grupo_investigacion\":\"TICSW\",\r\n                    \"num_extension\": \"01234567\",\r\n                    \"rol\": \"Profesor\"\r\n                }\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos"
+					]
+				},
+				"description": "Se hace porque confirma que se pueda crear un bono"
+			},
+			"response": []
+		},
+		{
+			"name": "Get bonos by usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/usuarios/{{usuario_id_1}}/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios",
+						"{{usuario_id_1}}",
+						"bonos"
+					]
+				},
+				"description": "Se hace para ver que se devuelvan los bonos de un usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "Get bonos by unexisting usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El usuario con el id dado no fue encontrado\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/usuarios/0/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios",
+						"0",
+						"bonos"
+					]
+				},
+				"description": "Se hace para ver que devuelva error cuando se intenta devolver los bonos de un usuario con id inexistente"
+			},
+			"response": []
+		}
+	]
+}
