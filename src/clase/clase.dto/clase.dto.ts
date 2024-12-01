@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import { IsString, IsNotEmpty, IsPositive } from "class-validator"
+import { BonoDto } from "src/bono/bono.dto/bono.dto"
 
 export class ClaseDto {
 
@@ -14,4 +15,6 @@ export class ClaseDto {
 
     @IsPositive()
     readonly num_creditos: number
+
+    readonly bonos: BonoDto[]
 }

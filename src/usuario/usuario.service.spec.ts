@@ -12,7 +12,8 @@ import { BonoEntity } from '../bono/bono.entity/bono.entity';
 
 describe('UsuarioService', () => {
   let service: UsuarioService;
-  let repository: Repository<UsuarioEntity>;
+  let usuarioRepository: Repository<UsuarioEntity>;
+  let bonoRepository: Repository<BonoEntity>;
   let usuarioList: UsuarioEntity[];
 
   beforeEach(async () => {
@@ -22,17 +23,19 @@ describe('UsuarioService', () => {
     }).compile();
 
     service = module.get<UsuarioService>(UsuarioService);
-    repository = module.get<Repository<UsuarioEntity>>(getRepositoryToken(UsuarioEntity));
+    usuarioRepository = module.get<Repository<UsuarioEntity>>(getRepositoryToken(UsuarioEntity));
+    bonoRepository = module.get<Repository<BonoEntity>>(getRepositoryToken(BonoEntity));
 
     await seedDatabase();
   });
 
   const seedDatabase = async () => {
-    repository.clear();
+    usuarioRepository.clear();
+    bonoRepository.clear();
 
     usuarioList = [];
     for (let i = 0; i < 5; i++) {
-      const usuario: UsuarioEntity = await repository.save({
+      const usuario: UsuarioEntity = await usuarioRepository.save({
         num_cedula: faker.number.int({ min: 1 }),
         nombre: faker.person.fullName(),
         grupo_investigacion: "TICSW",
@@ -63,7 +66,7 @@ describe('UsuarioService', () => {
     const newUsuario: UsuarioEntity = await service.crearUsuario(usuario);
     expect(newUsuario).not.toBeNull();
 
-    const storedUsuario: UsuarioEntity = await repository.findOne({ where: { id: newUsuario.id } });
+    const storedUsuario: UsuarioEntity = await usuarioRepository.findOne({ where: { id: newUsuario.id } });
     expect(storedUsuario).not.toBeNull();
     expect(storedUsuario.num_cedula).toEqual(usuario.num_cedula);
     expect(storedUsuario.nombre).toEqual(usuario.nombre);
@@ -125,7 +128,7 @@ describe('UsuarioService', () => {
   it('eliminarUsuario should delete a usuario', async () => {
     const storedUsuario: UsuarioEntity = usuarioList[0];
     await service.eliminarUsuario(storedUsuario.id);
-    const usuario: UsuarioEntity = await repository.findOne({ where: { id: storedUsuario.id } });
+    const usuario: UsuarioEntity = await usuarioRepository.findOne({ where: { id: storedUsuario.id } });
     expect(usuario).toBeNull();
   });
 
@@ -136,7 +139,7 @@ describe('UsuarioService', () => {
   it('eliminarUsuario should throw an error if the usuario is a Decana', async () => {
     const storedUsuario: UsuarioEntity = usuarioList[0];
     storedUsuario.rol = "Decana";
-    await repository.save(storedUsuario);
+    await usuarioRepository.save(storedUsuario);
 
     await expect(() => service.eliminarUsuario(storedUsuario.id)).rejects.toHaveProperty('message', 'El usuario con el id dado no puede ser eliminado porque tiene rol de Decana');
   });
@@ -144,17 +147,13 @@ describe('UsuarioService', () => {
   it('eliminarUsuario should throw an error if the usuario has bonos', async () => {
     const storedUsuario: UsuarioEntity = usuarioList[0];
 
-    const bono: BonoEntity = {
-      id: 1,
+    const bono: BonoEntity = await bonoRepository.save({
       monto: faker.number.int({ min: 1, max: 100 }),
       calificacion: faker.number.float({ min: 1, max: 5 }),
       palabra_clave: faker.lorem.word(),
       usuario: storedUsuario,
-      clase: null
-    }
+    });
 
-    storedUsuario.bonos = [bono];
-    await repository.save(storedUsuario);
     await expect(() => service.eliminarUsuario(storedUsuario.id)).rejects.toHaveProperty('message', 'El usuario con el id dado no puede ser eliminado porque tiene un bono asociados');
   });
 });

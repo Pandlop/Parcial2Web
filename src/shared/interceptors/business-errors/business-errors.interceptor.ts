@@ -10,6 +10,7 @@ export class BusinessErrorsInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle()
       .pipe(catchError(error => {
+
         if (error.type === BusinessError.NOT_FOUND)
           throw new HttpException(error.message, HttpStatus.NOT_FOUND);
         else if (error.type === BusinessError.PRECONDITION_FAILED)

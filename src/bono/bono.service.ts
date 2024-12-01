@@ -11,6 +11,9 @@ export class BonoService {
     constructor(
         @InjectRepository(BonoEntity)
         private readonly bonoRepository: Repository<BonoEntity>,
+
+        @InjectRepository(UsuarioEntity)
+        private readonly usuarioRepository: Repository<UsuarioEntity>,
     ) { }
 
     async crearBono(bono: BonoEntity): Promise<BonoEntity> {

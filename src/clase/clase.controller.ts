@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors/business-errors.interceptor';
 import { ClaseService } from './clase.service';
 import { ClaseEntity } from './clase.entity/clase.entity';
@@ -18,7 +18,7 @@ export class ClaseController {
     }
 
     @Get(':claseId')
-    async findClaseById(claseId: number) {
+    async findClaseById(@Param("claseId") claseId: number) {
         return await this.claseService.findClaseById(claseId);
     }
 

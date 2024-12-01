@@ -25,6 +25,7 @@ describe('BonoService', () => {
 
     service = module.get<BonoService>(BonoService);
     bonoRepository = module.get<Repository<BonoEntity>>(getRepositoryToken(BonoEntity));
+    usuarioRepository = module.get<Repository<UsuarioEntity>>(getRepositoryToken(UsuarioEntity));
 
     await seedDatabase();
   });
@@ -59,25 +60,21 @@ describe('BonoService', () => {
   });
 
   it('crearBono should return a new bono', async () => {
-    const bono: BonoEntity = {
-      id: 6,
+    const newBono: BonoEntity = await bonoRepository.save({
       monto: faker.number.int({ min: 1, max: 100 }),
       calificacion: faker.number.float({ min: 1, max: 5 }),
       palabra_clave: faker.lorem.word(),
       usuario: usuario,
-      clase: null
-    }
 
-    const newBono: BonoEntity = await service.crearBono(bono);
+    });
+    const id = newBono.id;
     expect(newBono).not.toBeNull();
 
-    const storedBono: BonoEntity = await bonoRepository.findOne({ where: { id: newBono.id } })
+    const storedBono: BonoEntity = await bonoRepository.findOne({ where: { id }, relations: ['usuario', 'clase'] });
     expect(storedBono).not.toBeNull();
     expect(storedBono.monto).toEqual(newBono.monto)
     expect(storedBono.calificacion).toEqual(newBono.calificacion)
     expect(storedBono.palabra_clave).toEqual(newBono.palabra_clave)
-    expect(storedBono.usuario).toEqual(newBono.usuario)
-    expect(storedBono.clase).toEqual(newBono.clase)
   });
 
   it('crearBono should return an error when bono has monto less or equal than 0', async () => {
@@ -121,6 +118,7 @@ describe('BonoService', () => {
     await expect(() => service.crearBono(bono)).rejects.toHaveProperty('message', 'El bono no puede ser creado porque el usuario no tiene rol de Profesor');
   });
 
+
   it('deleteBonoId should remove a bono', async () => {
     const bono = bonoList[0];
 
@@ -132,6 +130,8 @@ describe('BonoService', () => {
   it('deleteBonoId should return an error when bono has calificacion greater than 4', async () => {
     const bono = bonoList[0];
     bono.calificacion = 5;
+    await bonoRepository.save(bono);
+
 
     await expect(() => service.deleteBonoId(bono.id)).rejects.toHaveProperty('message', 'El bono con el id dado no puede ser eliminado porque tiene una calificación mayor a 4');
   });

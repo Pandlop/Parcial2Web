@@ -2,7 +2,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ClaseBonoService } from './clase-bono.service';
 
-@Controller('clases')
+@Controller('bonos')
 export class ClaseBonoController {
     constructor(private readonly claseBonoService: ClaseBonoService) { }
 

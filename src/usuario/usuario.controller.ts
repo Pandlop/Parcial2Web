@@ -17,8 +17,8 @@ export class UsuarioController {
         return await this.usuarioService.crearUsuario(usuario);
     }
 
-    @Get(':usuarioId')
-    async findUsuarioById(usuarioId: number) {
+    @Get('/:usuarioId')
+    async findUsuarioById(@Param('usuarioId') usuarioId: number) {
         return await this.usuarioService.findUsuarioById(usuarioId);
     }
 

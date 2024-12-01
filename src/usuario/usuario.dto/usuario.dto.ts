@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 
 import { IsNotEmpty, IsPositive, IsString } from "class-validator"
-
 export class UsuarioDto {
 
     @IsPositive()
@@ -21,4 +20,6 @@ export class UsuarioDto {
     @IsString()
     @IsNotEmpty()
     readonly rol: string
+
+    readonly jefe: number
 }

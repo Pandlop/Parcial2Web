@@ -56,8 +56,15 @@ describe('ClaseBonoService', () => {
   });
 
   it('findBonoByCodigo should return a list of bonos', async () => {
-    const bonos: BonoEntity[] = await service.findBonoByCodigo(clase.codigo);
-    expect(bonos.length).toBe(5);
+    const bono: BonoEntity = bonoList[0];
+    bono.clase = clase;
+    await bonoRepository.save(bono);
+    const bonoRes = await service.findBonoByCodigo(clase.codigo);
+    expect(bonoRes.id).toBe(bono.id);
+    expect(bonoRes.monto).toBe(bono.monto);
+    expect(bonoRes.calificacion).toBe(bono.calificacion);
+    expect(bonoRes.palabra_clave).toBe(bono.palabra_clave);
+
   });
 
   it('findBonoByCodigo should throw an exception for an invalid code', async () => {

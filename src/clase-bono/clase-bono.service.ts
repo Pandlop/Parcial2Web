@@ -11,14 +11,22 @@ export class ClaseBonoService {
     constructor(
         @InjectRepository(ClaseEntity)
         private readonly claseRepository: Repository<ClaseEntity>,
+
+        @InjectRepository(BonoEntity)
+        private readonly bonoRepository: Repository<BonoEntity>,
     ) { }
 
 
-    async findBonoByCodigo(codigo: string): Promise<BonoEntity[]> {
-        const clase = await this.claseRepository.findOne({ where: { codigo }, relations: ["bonos"] });
+    async findBonoByCodigo(codigo: string): Promise<BonoEntity> {
+        const clase: ClaseEntity = await this.claseRepository.findOne({ where: { codigo } });
         if (!clase) {
             throw new BusinessLogicException("La clase con el código dado no fue encontrada", BusinessError.NOT_FOUND);
         }
-        return clase.bonos;
+        const bono: BonoEntity = await this.bonoRepository.findOne({ where: { clase }, relations: ['clase'] });
+        if (!bono) {
+            throw new BusinessLogicException("No hay ningun bono asociado a la clase", BusinessError.NOT_FOUND);
+        }
+
+        return bono;
     }
 }

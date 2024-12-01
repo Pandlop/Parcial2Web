@@ -14,7 +14,7 @@ export class ClaseService {
 
     async crearClase(clase: ClaseEntity): Promise<ClaseEntity> {
         if (clase.codigo.length !== 10) {
-            throw new BusinessLogicException("La clase no puede ser creada porque el codigo no tiene 10 caracteres", BusinessError.NOT_FOUND);
+            throw new BusinessLogicException("La clase no puede ser creada porque el codigo no tiene 10 caracteres", BusinessError.PRECONDITION_FAILED);
         }
         return await this.claseRepository.save(clase);
     }
